@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Sara Landing Page Design System */
+
+@layer base {
+  :root {
+    /* Sara Brand Colors - Deep space theme with vibrant accents */
+    --background: 218 15% 6%;  /* Deep near-black #0D1117 */
+    --foreground: 0 0% 98%;    /* Pure white text */
+
+    /* Gradient Colors */
+    --gradient-start: 217 91% 60%;     /* Vibrant blue */
+    --gradient-middle: 195 85% 55%;    /* Blue-cyan */
+    --gradient-end: 290 85% 65%;       /* Purple-magenta */
+    
+    /* Interactive Elements */
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 218 15% 12%;
+    --secondary-foreground: 0 0% 90%;
+    
+    /* Glass Effect Colors */
+    /* --glass-bg: 218 15% 8%; */
+    --glass-border: 217 91% 60%;
+    --glass-shadow: 218 50% 3%;
+    
+    /* Cursor Glow */
+    --cursor-glow: 217 91% 60%;
+    --cursor-glow-secondary: 195 85% 55%;
+    
+    /* Feature Window States */
+    --feature-dimmed: 0.7;
+    --feature-bright: 1;
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-glow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply text-foreground font-inter overflow-x-hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: radial-gradient(circle at center, hsl(218 25% 8%) 0%, hsl(218 15% 6%) 100%);
+    min-height: 100vh;
+  }
+
+  /* Cursor Glow Effect - Follows mouse everywhere */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    background: radial-gradient(circle 300px at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                               hsl(var(--cursor-glow) / 0.08) 0%, 
+                               hsl(var(--cursor-glow-secondary) / 0.04) 40%, 
+                               transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  body.cursor-active::before {
+    opacity: 1;
+  }
+}
+
+@layer components {
+  /* Animated Gradient Text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-[hsl(var(--gradient-start))] via-[hsl(var(--gradient-middle))] to-[hsl(var(--gradient-end))];
+    @apply bg-clip-text text-transparent bg-[length:200%_100%];
+    animation: gradient-shimmer 3s ease-in-out infinite;
+  }
+
+  /* Feature Window Glass Effect */
+  .feature-window {
+    @apply bg-[hsl(var(--glass-bg)/0.6)] backdrop-blur-xl rounded-2xl;
+    @apply border border-transparent relative overflow-hidden;
+    @apply opacity-[var(--feature-dimmed)] transition-all duration-500;
+    box-shadow: 
+      inset 0 1px 0 0 hsl(var(--glass-border) / 0.1),
+      0 20px 40px -15px hsl(var(--glass-shadow));
+  }
+
+  .feature-window::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-px;
+    @apply bg-gradient-to-r from-transparent via-[hsl(var(--glass-border))] to-transparent;
+    @apply opacity-60;
+  }
+
+  .feature-window:hover {
+    @apply opacity-[var(--feature-bright)];
+    @apply shadow-[0_0_120px_-15px_hsl(217_91%_60%/0.6)];
+    background: 
+      radial-gradient(circle 800px at var(--feature-mouse-x, 50%) var(--feature-mouse-y, 50%), 
+        hsl(217 91% 70% / 0.4) 0%, 
+        hsl(217 91% 60% / 0.3) 25%, 
+        hsl(217 91% 50% / 0.2) 45%, 
+        hsl(217 91% 40% / 0.1) 60%, 
+        transparent 80%),
+      hsl(var(--glass-bg) / 0.6);
+    transition: background 0.1s ease, opacity var(--transition-glow);
+    border-color: hsl(217 91% 60% / 0.8);
+  }
+
+  /* Hero CTA Button */
+  .cta-button {
+    @apply bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))];
+    @apply text-white font-semibold px-8 py-4 rounded-full;
+    @apply transform transition-all duration-300;
+    @apply shadow-[0_0_30px_hsl(var(--gradient-start)/0.3)];
+  }
+
+  .cta-button:hover {
+    @apply scale-105 shadow-[0_0_50px_hsl(var(--gradient-start)/0.5)];
+  }
+
+  /* Navigation Button */
+  .nav-button {
+    @apply border border-[hsl(var(--glass-border)/0.3)] text-foreground;
+    @apply px-6 py-2 rounded-full backdrop-blur-sm;
+    @apply transition-all duration-300;
+  }
+
+  .nav-button:hover {
+    @apply border-[hsl(var(--glass-border))] shadow-[0_0_20px_hsl(var(--glass-border)/0.2)];
+  }
+
+  /* Testimonial Card */
+  .testimonial-card {
+    @apply bg-[hsl(var(--glass-bg)/0.8)] backdrop-blur-md rounded-xl p-6;
+    @apply border border-[hsl(var(--glass-border)/0.2)] min-w-[320px];
+    @apply transition-all duration-300;
+  }
+
+  .testimonial-card:hover {
+    @apply border-[hsl(var(--glass-border)/0.8)];
+    background: 
+      radial-gradient(circle 400px at center, 
+        hsl(var(--gradient-start) / 0.2) 0%, 
+        hsl(var(--gradient-middle) / 0.15) 40%, 
+        hsl(var(--gradient-end) / 0.1) 60%, 
+        transparent 80%),
+      hsl(var(--glass-bg) / 0.9);
+    box-shadow: 
+      0 0 60px hsl(var(--gradient-start) / 0.4),
+      0 0 40px hsl(var(--gradient-middle) / 0.3),
+      0 0 20px hsl(var(--gradient-end) / 0.2),
+      inset 0 1px 0 0 hsl(var(--glass-border) / 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* Neural Network Animation */
+  .neural-node {
+    @apply w-2 h-2 bg-[hsl(var(--gradient-start))] rounded-full;
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+
+  .neural-connection {
+    @apply stroke-[hsl(var(--gradient-middle)/0.6)] stroke-1;
+    animation: flow 3s ease-in-out infinite;
+  }
+}
+
+@layer utilities {
+  .font-inter {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .sara-bg {
+    background: hsl(var(--background));
+  }
+}
+
+/* Keyframe Animations */
+@keyframes gradient-shimmer {
+  0% { background-position: 200% 0; }
+  50% { background-position: 0% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes pulse-glow {
+  0% { 
+    box-shadow: 0 0 5px hsl(var(--gradient-start)), 0 0 10px hsl(var(--gradient-start));
+    transform: scale(1);
+  }
+  100% { 
+    box-shadow: 0 0 10px hsl(var(--gradient-start)), 0 0 20px hsl(var(--gradient-start));
+    transform: scale(1.1);
+  }
+}
+
+@keyframes flow {
+  0% { stroke-dasharray: 5 5; stroke-dashoffset: 0; }
+  100% { stroke-dasharray: 5 5; stroke-dashoffset: 10; }
+}
+
+/* Scrolling Testimonials */
+@keyframes scroll-testimonials {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% - 2rem)); }
+}
+
+.testimonials-scroll {
+  animation: scroll-testimonials 30s linear infinite;
+}
+
+.testimonials-scroll:hover {
+  animation-play-state: paused;
+}
+
