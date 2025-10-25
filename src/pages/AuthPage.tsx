@@ -72,7 +72,7 @@ const AuthPage = () => {
           description: "Welcome back to Sara.",
         });
 
-        navigate('/dashboard');
+        navigate('/Home');
       } else {
         // Sign up
         const { data, error } = await supabase.auth.signUp({

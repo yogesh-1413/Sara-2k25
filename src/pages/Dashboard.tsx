@@ -89,7 +89,6 @@ const Dashboard = () => {
             </Button>
           </div>
 
-          {/* Email Verification Alert */}
           {user && !user.email_confirmed_at && (
             <Alert className="mb-6 border-yellow-500/50 bg-yellow-500/10">
               <AlertCircle className="h-4 w-4 text-yellow-500" />
@@ -111,7 +110,6 @@ const Dashboard = () => {
             </Alert>
           )}
 
-          {/* User Details Card */}
           <Card className="feature-window">
             <CardHeader>
               <CardTitle className="text-2xl gradient-text">Your Profile</CardTitle>
@@ -159,7 +157,6 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {/* User Metadata */}
               {user?.user_metadata && Object.keys(user.user_metadata).length > 0 && (
                 <div className="pt-6 border-t border-[hsl(var(--glass-border)/0.3)]">
                   <h3 className="text-lg font-semibold text-foreground mb-4">Additional Information</h3>
