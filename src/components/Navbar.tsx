@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { Menu, X, UserCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navbar: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,9 +27,10 @@ const Navbar: FC = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <button className="hover:opacity-80 transition">
+          <Link to="/dashboard"
+           className="hover:opacity-80 transition">
             <UserCircle size={28} />
-          </button>
+          </Link>
 
           <button
             className="md:hidden focus:outline-none"
